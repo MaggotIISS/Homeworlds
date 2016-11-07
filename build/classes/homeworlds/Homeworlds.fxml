@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="481.0" prefWidth="434.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="homeworlds.HomeworldsController">
+  <children>
+    <Label fx:id="homestar" layoutX="2.0" layoutY="2.0" onMouseClicked="#homestarClick" text="Homestar" />
+    <Label fx:id="orbits" layoutX="2.0" layoutY="29.0" onMouseClicked="#orbitsClick" text="Orbits" />
+    <Label fx:id="hz" layoutX="4.0" layoutY="54.0" onMouseClicked="#hzClick" text="HZ" />
+    <Label fx:id="remarks" layoutX="4.0" layoutY="79.0" onMouseClicked="#remarksClick" text="Remarks" />
+    <TextField fx:id="homeStar" layoutX="62.0" />
+    <TextField fx:id="orbitsAt" layoutX="62.0" layoutY="25.0" />
+    <TextField fx:id="habZone" layoutX="62.0" layoutY="50.0" />
+    <TextField fx:id="remarksTxt" layoutX="62.0" layoutY="75.0" />
+    <TextArea fx:id="ta" layoutY="200.0" prefHeight="267.0" prefWidth="434.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0" />
+    <ImageView fx:id="iv" fitHeight="200.0" fitWidth="200.0" layoutX="234.0" onMouseClicked="#imgClick" pickOnBounds="true" preserveRatio="true" />
+  </children>
+</AnchorPane>
