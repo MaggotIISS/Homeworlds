@@ -7,8 +7,8 @@
     <offline-allowed/>
   </information>
   <resources>
-    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Homeworlds.jar" size="17231" download="eager" />
+    <j2se version="1.6+" java-vm-args="-ea "  href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="Homeworlds.jar" size="21328" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="Homeworlds" >
     <param name="requiredFXVersion" value="8.0+"/>

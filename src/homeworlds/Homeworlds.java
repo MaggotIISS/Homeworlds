@@ -20,9 +20,12 @@ public class Homeworlds extends Application {
   @Override
   public void start(Stage stage) throws Exception {
     Parent root = FXMLLoader.load(getClass().getResource("Homeworlds.fxml"));
-    Scene scene = new Scene(root);
+    Scene scene = new Scene(root, 450, 800);
     stage.setScene(scene);
+    stage.setX(0);
+    stage.setY(200);
     stage.show();
+    HomeworldsController.running = true;
   }
 
   /**
