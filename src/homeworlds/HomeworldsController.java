@@ -221,6 +221,7 @@ public class HomeworldsController implements Initializable {
   @Override
   public void initialize(URL url, ResourceBundle rb) {
     uwp.setText("A788999-C");
+    remarksTxt.setText("Ri Pa Ph An Cp (Amindii)2 Varg0 Asla0 Sa");
     MouseEvent me = null;
     img = new Image(getClass().getResource("ImperialSunBurst.gif").toString());
     iv.setImage(img);
