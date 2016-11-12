@@ -684,23 +684,42 @@ public class HomeworldsController implements Initializable {
     for (int i = 1; i < lined.length; i++) {
       try {
         bits = lined[i].split("\t");
-        ta.appendText("" + i + "\n");
+        ta.appendText("Line " + i + " = " + bits[7] + "\n");
+        complete = false;
         for (int j = 1; j < 7; j++) {
+//          complete = true;
           if (!"".equals(bits[j])) {
             ta.appendText(uwpCompare(uwps[j - 1], bits[j], j) + CRLF);
+            if ("TRUE".equals(uwpCompare(uwps[j - 1], bits[j], j))) {
+              complete = true;
+            }
+            if ("FALSE".equals(uwpCompare(uwps[j - 1], bits[j], j))) {
+              complete = false;
+            }
           }
         }
+        ta.appendText("\tpass = " + complete + CRLF);
       } catch (Exception e) {
         ta.appendText("" + e);
       }
     }
   }
+  boolean complete = false;
 
   private String uwpCompare(String uwp, String bit, int j) {
+    String s = "";
     if (bit != "") {
-      return "Including " + uwp + "\tIN column " + j + " (" + bits[j] + ")";
+      s = "" + uwp + " IN " + bits[j] + " = " + compare(uwp, bits[j]);
     }
-    return "";
+    return s;
+  }
+
+  private String compare(String uwp, String bit) {
+    String s = "FALSE";
+    if (bit.contains(uwp)) {
+      s = "TRUE";
+    }
+    return s;
   }
 
 }
