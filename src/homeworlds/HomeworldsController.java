@@ -221,7 +221,7 @@ public class HomeworldsController implements Initializable {
 
   @Override
   public void initialize(URL url, ResourceBundle rb) {
-    uwp.setText("A788999-C");
+    uwp.setText("A000999-C");
     remarksTxt.setText("Ri Pa Ph An Cp (Amindii)2 Varg0 Asla0 Sa");
     updateUWP();
     MouseEvent me = null;
@@ -677,7 +677,7 @@ public class HomeworldsController implements Initializable {
         ta.appendText(CRLF);
       }
     }
-    String[] lined = ta.getText().split(CRLF);
+    lined = ta.getText().split(CRLF);
     lines = lined.length;
     ta.setText("");
 
@@ -685,26 +685,34 @@ public class HomeworldsController implements Initializable {
       try {
         bits = lined[i].split("\t");
         ta.appendText("Line " + i + " = " + bits[7] + "\n");
-        complete = false;
+//        complete = false;
         for (int j = 1; j < 7; j++) {
 //          complete = true;
           if (!"".equals(bits[j])) {
             ta.appendText(uwpCompare(uwps[j - 1], bits[j], j) + CRLF);
             if ("TRUE".equals(uwpCompare(uwps[j - 1], bits[j], j))) {
-              complete = true;
+//              complete = true;
             }
             if ("FALSE".equals(uwpCompare(uwps[j - 1], bits[j], j))) {
-              complete = false;
+//              complete = false;
             }
           }
         }
+        confirmTruths(i);
         ta.appendText("\tpass = " + complete + CRLF);
       } catch (Exception e) {
         ta.appendText("" + e);
       }
     }
   }
-  boolean complete = false;
+
+  private boolean complete = false;
+  private String[] lined;
+
+  private void confirmTruths(int i) {
+    ta.appendText("Line " + i + "\t" + "" + CRLF);
+    ta.appendText(lined[i] + "" + CRLF);
+  }
 
   private String uwpCompare(String uwp, String bit, int j) {
     String s = "";
