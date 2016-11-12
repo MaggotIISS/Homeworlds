@@ -216,12 +216,14 @@ public class HomeworldsController implements Initializable {
   private String UWP = "A788999-C";
   private String reply = UWP;
   private ActionEvent ae;
+  private String[] Uwp;
   //</editor-fold>
 
   @Override
   public void initialize(URL url, ResourceBundle rb) {
     uwp.setText("A788999-C");
     remarksTxt.setText("Ri Pa Ph An Cp (Amindii)2 Varg0 Asla0 Sa");
+    updateUWP();
     MouseEvent me = null;
     img = new Image(getClass().getResource("ImperialSunBurst.gif").toString());
     iv.setImage(img);
@@ -268,7 +270,7 @@ public class HomeworldsController implements Initializable {
   @FXML
   private void remarksClick(MouseEvent event) {
     labelClick(remarks);
-    createRemarks();
+    showRemarks();
   }
 
   @FXML
@@ -302,8 +304,11 @@ public class HomeworldsController implements Initializable {
         break;
       }
       case "Remarks": {
-        //Generate HabZone
         array = Remarks;
+        break;
+      }
+      case "UWP": {
+        array = Uwp;
         break;
       }
       default: {
@@ -312,19 +317,23 @@ public class HomeworldsController implements Initializable {
     }
     strings = new String[][]{array};
     int num = 0;
-    for (int i = 0; i < strings.length; i++) {
-      num = Integer.parseInt(strings[i][0]);
-      for (int j = 1; j < strings[i].length; j++) {
-        String it = strings[i][j] + "\t";
-        ta.appendText(it);
-        System.out.print(it);
-        if (j % num == 0) {
-          ta.appendText(CRLF);
-          System.out.println("");
+    try {
+      for (int i = 0; i < strings.length; i++) {
+        num = Integer.parseInt(strings[i][0]);
+        for (int j = 1; j < strings[i].length; j++) {
+          String it = strings[i][j] + "\t";
+          ta.appendText(it);
+          System.out.print(it);
+          if (j % num == 0) {
+            ta.appendText(CRLF);
+            System.out.println("");
+          }
         }
+        ta.appendText(CRLF);
+        System.out.println("");
       }
-      ta.appendText(CRLF);
-      System.out.println("");
+    } catch (Exception e) {
+      System.out.println(e);
     }
   }
 
@@ -580,11 +589,8 @@ public class HomeworldsController implements Initializable {
 
   }
 
-  private void createRemarks() {
-    ta.appendText("show Remarks from Panel4T5Locator or get UWP ???????-?" + CRLF);
-    ta.appendText("OR BOTH!" + CRLF);
-    if (!running) {
-    } else {
+  private void showRemarks() {
+    if (running) {
       if (uwp.getText().isEmpty()) {
         reply = showInputDialog(null, "Enter UWP", UWP);
         ta.setText(reply);
@@ -595,14 +601,10 @@ public class HomeworldsController implements Initializable {
         }
         goClick(ae);
       }
-      findRemarks(reply);
     }
-  }
-
-  private void findRemarks(String reply) {
     try {
       if (reply != "") {
-        ta.appendText("findRemarks for " + reply.substring(1, 7) + CRLF);
+//        ta.appendText("showRemarks  " + remarksTxt.getText() + CRLF);
       } else {
         reply = UWP;
         uwp.setText(reply);
@@ -610,6 +612,43 @@ public class HomeworldsController implements Initializable {
     } catch (Exception e) {
       System.out.println(e);
     }
+    bits = remarksTxt.getText().split(" ");
+    for (int i = 0; i < bits.length; i++) {
+      ta.appendText(bits[i] + " = ");
+      ta.appendText(getRemark(bits[i]));
+      ta.appendText(CRLF);
+    }
+
+  }
+
+  private String getRemark(String bit) {
+    String[] lines = ta.getText().split(CRLF);
+    int max = 0;
+    for (int i = 0; i < lines.length; i++) {
+      if (lines[i].isEmpty()) {
+        max = i - 1;
+      }
+    }
+    for (int i = 0; i < max; i++) {
+      for (int j = 0; j < bits.length; j++) {
+        if (lines[i].startsWith(bit)) {
+          String[] parts = lines[i].split("\t");
+          return parts[parts.length - 1];
+        }
+      }
+    }
+    return "";
+  }
+
+  @FXML
+  private void updateUWP() {
+    Uwp = new String[]{
+      uwp.getText().substring(1, 2),
+      uwp.getText().substring(2, 3),
+      uwp.getText().substring(3, 4),
+      uwp.getText().substring(4, 5),
+      uwp.getText().substring(5, 6),
+      uwp.getText().substring(6, 7)};
   }
 
   private void createImage() {
@@ -618,6 +657,50 @@ public class HomeworldsController implements Initializable {
     s += "img.getWidth() = " + img.getWidth() + CRLF;
     s += "img.getHeight() = " + img.getHeight() + CRLF;
     ta.setText(s);
+  }
+
+  private void createRemarks() {
+    updateUWP();
+    String size = Uwp[0];
+    String atmo = Uwp[1];
+    String hydr = Uwp[2];
+    String pop = Uwp[3];
+    String gov = Uwp[4];
+    String law = Uwp[5];
+    String[] uwps = {size, atmo, hydr, pop, gov, law};
+    // Compare UWP to Remarks table to create remark values
+    int tabs = Integer.parseInt(Remarks[0]);
+    ta.setText("");
+    for (int i = 1; i < Remarks.length; i++) {
+      ta.appendText(Remarks[i] + "\t");
+      if (i % tabs == 0) {
+        ta.appendText(CRLF);
+      }
+    }
+    String[] lined = ta.getText().split(CRLF);
+    lines = lined.length;
+    ta.setText("");
+
+    for (int i = 1; i < lined.length; i++) {
+      try {
+        bits = lined[i].split("\t");
+        ta.appendText("" + i + "\n");
+        for (int j = 1; j < 7; j++) {
+          if (!"".equals(bits[j])) {
+            ta.appendText(uwpCompare(uwps[j - 1], bits[j], j) + CRLF);
+          }
+        }
+      } catch (Exception e) {
+        ta.appendText("" + e);
+      }
+    }
+  }
+
+  private String uwpCompare(String uwp, String bit, int j) {
+    if (bit != "") {
+      return "Including " + uwp + "\tIN column " + j + " (" + bits[j] + ")";
+    }
+    return "";
   }
 
 }
