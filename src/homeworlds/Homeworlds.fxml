@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.canvas.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -7,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" maxWidth="1.7976931348623157E308" minWidth="250.0" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="homeworlds.HomeworldsController">
+<AnchorPane id="AnchorPane" maxWidth="1.7976931348623157E308" minWidth="250.0" prefHeight="500.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="homeworlds.HomeworldsController">
   <children>
       <Button layoutX="215.0" mnemonicParsing="false" onAction="#goClick" prefHeight="125.0" prefWidth="33.0" text="Go" />
     <Label fx:id="homestar" layoutX="2.0" layoutY="2.0" onMouseClicked="#homestarClick" text="Homestar" />
@@ -22,5 +24,9 @@
     <ImageView fx:id="iv" fitHeight="200.0" fitWidth="200.0" layoutX="234.0" onMouseClicked="#imgClick" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <TextField fx:id="uwp" layoutX="56.0" layoutY="100.0" onKeyPressed="#updateUWP" onMouseClicked="#updateUWP" prefHeight="25.0" prefWidth="159.0" />
       <Label fx:id="l4uwp" layoutX="2.0" layoutY="104.0" onMouseClicked="#uwpClick" text="UWP" />
+      <Canvas fx:id="canvas" height="200.0" layoutX="250.0" onMouseClicked="#canvasClick" width="200.0">
+         <effect>
+            <Glow />
+         </effect></Canvas>
   </children>
 </AnchorPane>

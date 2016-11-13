@@ -774,9 +774,48 @@ public class HomeworldsController implements Initializable {
       gc.drawImage(img, 0, 0, 200, 200);
       gc.setFill(color);
       String size = homeStar.getText().substring(homeStar.getText().indexOf(" ") + 1);
+      int siz = 50;
+      switch (size) {
+        case "Ia": {
+          siz = 100;
+          break;
+        }
+        case "Ib": {
+          siz = 90;
+          break;
+        }
+        case "II": {
+          siz = 80;
+          break;
+        }
+        case "III": {
+          siz = 70;
+          break;
+        }
+        case "IV": {
+          siz = 60;
+          break;
+        }
+        case "V": {
+          siz = 50;
+          break;
+        }
+        case "VI": {
+          siz = 40;
+          break;
+        }
+        case "VII":
+        case "D": {
+          siz = 30;
+          break;
+        }
+      }
       System.out.println("size = " + size);
-      int x = 50, y = 52;
-      gc.fillOval(x, y, 100, 100);
+      System.out.println("siz = " + siz);
+      int x = 55, y = 57;
+      gc.fillOval(x, y, siz, siz);
+      gc.setFill(Color.WHITE);
+      gc.fillText(homeStar.getText(), 10, 20);
     } catch (Exception e) {
       System.out.println(e);
     }
