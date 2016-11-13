@@ -18,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import static javax.swing.JOptionPane.showInputDialog;
 
 /**
@@ -25,6 +26,9 @@ import static javax.swing.JOptionPane.showInputDialog;
  @author Mark Ferguson
  */
 public class HomeworldsController implements Initializable {
+
+  @FXML
+  private Canvas canvas;
 
   //<editor-fold defaultstate="collapsed" desc="FXMLVariables">
   @FXML
@@ -229,7 +233,7 @@ public class HomeworldsController implements Initializable {
     MouseEvent me = null;
     img = new Image(getClass().getResource("ImperialSunBurst.gif").toString());
     iv.setImage(img);
-    iv.setVisible(true);
+    iv.setVisible(false);
     goClick(ae);
   }
 
@@ -655,50 +659,6 @@ public class HomeworldsController implements Initializable {
       uwp.getText().substring(6, 7)};
   }
 
-  private void createImage() {
-    ta.setText("createImage" + CRLF);
-    String s = "";
-    String image = "";
-    s += "img.getWidth() = " + img.getWidth() + CRLF;
-    s += "img.getHeight() = " + img.getHeight() + CRLF;
-    String col = homeStar.getText().substring(0, 1);
-    switch (col) {
-      case "O":
-      case "B":
-      case "A": {
-        image = "SunA.gif";
-        break;
-      }
-      case "F": {
-        image = "SunF.gif";
-        break;
-      }
-      case "G": {
-        image = "SunG.gif";
-        break;
-      }
-      case "K": {
-        image = "SunK.gif";
-        break;
-      }
-      case "M": {
-        image = "SunM.gif";
-        break;
-      }
-    }
-    try {
-      img = new Image(getClass().getResource(image).toString());
-      iv.setImage(img);
-      Canvas canvas = new Canvas(200, 200);
-      GraphicsContext gc = canvas.getGraphicsContext2D();
-      gc.drawImage(img, 0, 0, 200, 200);
-      gc.fillOval(100, 100, 100, 100);
-    } catch (Exception e) {
-      System.out.println(e);
-    }
-    ta.setText(s);
-  }
-
   private void createRemarks() {
     updateUWP();
     String size = Uwp[0];
@@ -768,6 +728,68 @@ public class HomeworldsController implements Initializable {
       s = "TRUE";
     }
     return s;
+  }
+
+  private void createImage() {
+    ta.setText("createImage" + CRLF);
+    String s = "";
+    String image = "";
+    s += "img.getWidth() = " + img.getWidth() + CRLF;
+    s += "img.getHeight() = " + img.getHeight() + CRLF;
+    String col = homeStar.getText().substring(0, 1);
+    Color color = null;
+    switch (col) {
+      case "O":
+      case "B":
+      case "A": {
+        image = "SunOBA.gif";
+        color = Color.CYAN;
+        break;
+      }
+      case "F": {
+        image = "SunF.gif";
+        color = Color.WHITE;
+        break;
+      }
+      case "G": {
+        image = "SunG.gif";
+        color = Color.YELLOW;
+        break;
+      }
+      case "K": {
+        image = "SunK.gif";
+        color = Color.ORANGE;
+        break;
+      }
+      case "M": {
+        image = "SunM.gif";
+        color = Color.RED;
+        break;
+      }
+    }
+    try {
+      img = new Image(getClass().getResource(image).toString());
+      iv.setImage(img);
+      gc = canvas.getGraphicsContext2D();
+      gc.drawImage(img, 0, 0, 200, 200);
+      gc.setFill(color);
+      String size = homeStar.getText().substring(homeStar.getText().indexOf(" ") + 1);
+      System.out.println("size = " + size);
+      int x = 50, y = 52;
+      gc.fillOval(x, y, 100, 100);
+    } catch (Exception e) {
+      System.out.println(e);
+    }
+    ta.setText(s);
+  }
+  GraphicsContext gc;
+
+  @FXML
+  private void canvasClick(MouseEvent event) {
+    System.out.println("homeworlds.HomeworldsController.canvasClick()");
+    iv.setImage(img);
+    iv.setVisible(false);
+    canvas.setVisible(true);
   }
 
 }
