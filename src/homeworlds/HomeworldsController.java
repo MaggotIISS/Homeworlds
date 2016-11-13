@@ -10,6 +10,8 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -238,7 +240,7 @@ public class HomeworldsController implements Initializable {
     hzClick(me);
     remarksClick(me);
     uwpClick(me);
-//    imgClick(me);
+    imgClick(me);
   }
 
   @FXML
@@ -324,9 +326,11 @@ public class HomeworldsController implements Initializable {
           String it = strings[i][j] + "\t";
           ta.appendText(it);
           System.out.print(it);
-          if (j % num == 0) {
-            ta.appendText(CRLF);
-            System.out.println("");
+          if (num != 0) {
+            if (j % num == 0) {
+              ta.appendText(CRLF);
+              System.out.println("");
+            }
           }
         }
         ta.appendText(CRLF);
@@ -654,8 +658,44 @@ public class HomeworldsController implements Initializable {
   private void createImage() {
     ta.setText("createImage" + CRLF);
     String s = "";
+    String image = "";
     s += "img.getWidth() = " + img.getWidth() + CRLF;
     s += "img.getHeight() = " + img.getHeight() + CRLF;
+    String col = homeStar.getText().substring(0, 1);
+    switch (col) {
+      case "O":
+      case "B":
+      case "A": {
+        image = "SunA.gif";
+        break;
+      }
+      case "F": {
+        image = "SunF.gif";
+        break;
+      }
+      case "G": {
+        image = "SunG.gif";
+        break;
+      }
+      case "K": {
+        image = "SunK.gif";
+        break;
+      }
+      case "M": {
+        image = "SunM.gif";
+        break;
+      }
+    }
+    try {
+      img = new Image(getClass().getResource(image).toString());
+      iv.setImage(img);
+      Canvas canvas = new Canvas(200, 200);
+      GraphicsContext gc = canvas.getGraphicsContext2D();
+      gc.drawImage(img, 0, 0, 200, 200);
+      gc.fillOval(100, 100, 100, 100);
+    } catch (Exception e) {
+      System.out.println(e);
+    }
     ta.setText(s);
   }
 
