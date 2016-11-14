@@ -5,6 +5,11 @@
  */
 package homeworlds;
 
+//import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -19,6 +24,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javax.imageio.ImageIO;
 import static javax.swing.JOptionPane.showInputDialog;
 
 /**
@@ -26,6 +34,8 @@ import static javax.swing.JOptionPane.showInputDialog;
  @author Mark Ferguson
  */
 public class HomeworldsController implements Initializable {
+
+  private String FS = File.separator;
 
   @FXML
   private Canvas canvas;
@@ -39,7 +49,6 @@ public class HomeworldsController implements Initializable {
   private Label homestar;
   @FXML
   private Label hz;
-  private Image img;
   @FXML
   private ImageView iv;
   @FXML
@@ -223,6 +232,7 @@ public class HomeworldsController implements Initializable {
   private String reply = UWP;
   private ActionEvent ae;
   private String[] Uwp;
+  private Image img;
   //</editor-fold>
 
   @Override
@@ -232,10 +242,14 @@ public class HomeworldsController implements Initializable {
     updateUWP();
     MouseEvent me = null;
     img = new Image(getClass().getResource("ImperialSunBurst.gif").toString());
+    img = new Image("file:///C://T5/_T5ImageLibrary/ImperialSunBurst.gif");
+
     iv.setImage(img);
     iv.setVisible(false);
+    runn = true;
     goClick(ae);
   }
+  boolean runn;
 
   @FXML
   private void goClick(ActionEvent event) {
@@ -250,6 +264,7 @@ public class HomeworldsController implements Initializable {
   @FXML
   private void imgClick(MouseEvent event) {
     createImage();
+//    goClick(ae);
   }
 
   @FXML
@@ -736,6 +751,10 @@ public class HomeworldsController implements Initializable {
     String image = "";
     s += "img.getWidth() = " + img.getWidth() + CRLF;
     s += "img.getHeight() = " + img.getHeight() + CRLF;
+//    s += "X = " + getX() + CRLF;
+//    s += "Y = " + getY() + CRLF;
+//    s += "W = " + getW() + CRLF;
+//    s += "H = " + getH() + CRLF;
     String col = homeStar.getText().substring(0, 1);
     Color color = null;
     switch (col) {
@@ -812,10 +831,23 @@ public class HomeworldsController implements Initializable {
       }
       System.out.println("size = " + size);
       System.out.println("siz = " + siz);
+
       int x = 55, y = 57;
       gc.fillOval(x, y, siz, siz);
+
       gc.setFill(Color.WHITE);
-      gc.fillText(homeStar.getText(), 10, 20);
+      gc.fillText(homeStar.getText(), 5, 15);
+      String txt = habZone.getText().substring(habZone.getText().indexOf("  ") + 2);
+      String[] txts = orbitsAt.getText().split(" ");
+      System.out.println("txts[0] = " + txts[0]);
+      gc.fillText(txts[0] + " " + habZone.getText().substring(habZone.getText().indexOf(" @")), 135, 15);
+      txt = habZone.getText().substring(0, habZone.getText().indexOf("."));
+      gc.fillText(txt, 5, 195);
+      int start = orbitsAt.getText().indexOf("(") + 1;
+      int end = orbitsAt.getText().indexOf(")");
+      txt = orbitsAt.getText().substring(start, end);
+      gc.fillText(txt, 135, 195);
+//      savePic();
     } catch (Exception e) {
       System.out.println(e);
     }
@@ -829,6 +861,42 @@ public class HomeworldsController implements Initializable {
     iv.setImage(img);
     iv.setVisible(false);
     canvas.setVisible(true);
+    savePic();
   }
 
+  private void savePic() {
+    System.out.println("homeworlds.HomeworldsController.savePic()");
+    String folder = "";
+    String file = homeStar.getText() + "-" + orbitsAt.getText();
+    folder = T5 + FS + "_T5 Image Library";
+    FileChooser fc = new FileChooser();
+    fc.getExtensionFilters().addAll(
+      new ExtensionFilter("GIF Files", "*.gif"),
+      new ExtensionFilter("PNG Files", "*.png"),
+      new ExtensionFilter("JPEG Files", "*.jpg")
+    );
+    fc.setTitle("Save As");
+    File f = new File(folder);
+    fc.setInitialDirectory(f);
+    fc.setInitialFileName(file);
+    try {
+      File to = fc.showSaveDialog(null);
+      System.out.println("from = gc");
+      System.out.println("to = " + to.toString());
+//      BufferedImage bi = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
+      Robot r = new Robot();
+      BufferedImage bi = r.createScreenCapture(new Rectangle(
+        Homeworlds.getX() + 5 + 250,
+        Homeworlds.getY() + 30,
+        200,
+        200));
+      System.out.println(super.toString());
+      System.out.println(homeworlds.Homeworlds.getX());
+      ImageIO.write(bi, "gif", to);
+    } catch (Exception e) {
+      System.out.println(e);
+    }
+  }
+  String T5 = "C://T5";
+  Image image;
 }
