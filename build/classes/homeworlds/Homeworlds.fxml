@@ -20,7 +20,7 @@
     <TextField fx:id="orbitsAt" layoutX="56.0" layoutY="25.0" prefHeight="25.0" prefWidth="159.0" />
     <TextField fx:id="habZone" layoutX="56.0" layoutY="50.0" prefHeight="25.0" prefWidth="159.0" />
     <TextField fx:id="remarksTxt" layoutX="56.0" layoutY="75.0" prefHeight="25.0" prefWidth="159.0" />
-    <TextArea fx:id="ta" layoutY="200.0" prefHeight="267.0" prefWidth="434.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0" />
+    <TextArea fx:id="ta" layoutY="200.0" prefHeight="267.0" prefWidth="434.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="200.0" />
     <ImageView fx:id="iv" fitHeight="200.0" fitWidth="200.0" layoutX="234.0" onMouseClicked="#imgClick" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <TextField fx:id="uwp" layoutX="56.0" layoutY="100.0" onKeyPressed="#updateUWP" onMouseClicked="#updateUWP" prefHeight="25.0" prefWidth="159.0" />
       <Label fx:id="l4uwp" layoutX="2.0" layoutY="104.0" onMouseClicked="#uwpClick" text="UWP" />

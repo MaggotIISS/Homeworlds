@@ -6,8 +6,7 @@
 package homeworlds;
 
 //import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.awt.Robot;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
@@ -408,6 +407,7 @@ public class HomeworldsController implements Initializable {
       dec = "" + num;
       homeStar.setText(type + dec + " " + siz);
     }
+    createImage();
   }
 
   private void createVariance() {
@@ -487,6 +487,7 @@ public class HomeworldsController implements Initializable {
     } catch (Exception e) {
 
     }
+    createImage();
   }
 
   private void createHabZone() {
@@ -609,7 +610,7 @@ public class HomeworldsController implements Initializable {
     if (total < 0) {
       goClick(ae);
     }
-
+    createImage();
   }
 
   private void showRemarks() {
@@ -789,6 +790,9 @@ public class HomeworldsController implements Initializable {
     try {
       img = new Image(getClass().getResource(image).toString());
       iv.setImage(img);
+      bi = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
+      Graphics bic = bi.getGraphics();
+
       gc = canvas.getGraphicsContext2D();
       gc.drawImage(img, 0, 0, 200, 200);
       gc.setFill(color);
@@ -854,6 +858,7 @@ public class HomeworldsController implements Initializable {
     ta.setText(s);
   }
   GraphicsContext gc;
+  BufferedImage bi;
 
   @FXML
   private void canvasClick(MouseEvent event) {
@@ -869,6 +874,11 @@ public class HomeworldsController implements Initializable {
     String folder = "";
     String file = homeStar.getText() + "-" + orbitsAt.getText();
     folder = T5 + FS + "_T5 Image Library";
+    try {
+      folder = T5;
+    } catch (Exception e) {
+
+    }
     FileChooser fc = new FileChooser();
     fc.getExtensionFilters().addAll(
       new ExtensionFilter("GIF Files", "*.gif"),
@@ -883,15 +893,26 @@ public class HomeworldsController implements Initializable {
       File to = fc.showSaveDialog(null);
       System.out.println("from = gc");
       System.out.println("to = " + to.toString());
-//      BufferedImage bi = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
-      Robot r = new Robot();
-      BufferedImage bi = r.createScreenCapture(new Rectangle(
-        Homeworlds.getX() + 5 + 250,
-        Homeworlds.getY() + 30,
-        200,
-        200));
-      System.out.println(super.toString());
-      System.out.println(homeworlds.Homeworlds.getX());
+      bi = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
+      //<editor-fold defaultstate="collapsed" desc="WORKING COPY">
+      /*
+       THIS WAY WORKS - DO NOT DELETE!
+       // Robot r = new Robot();
+       // bi = r.createScreenCapture(new Rectangle(
+       // Homeworlds.getX() + 5 + 250,
+       // Homeworlds.getY() + 30,
+       // 200,
+       // 200));
+       */
+      //</editor-fold>
+      //  INSERT WORKING COPY HERE TO HAVE PIC OR COMMENT TO HAVE BLANK SO FAR
+//      Robot r = new Robot();
+//      bi = r.createScreenCapture(new Rectangle(
+//        Homeworlds.getX() + 5 + 250,
+//        Homeworlds.getY() + 30,
+//        200,
+//        200));
+      //  INSERT WORKING COPY HERE TO HAVE PIC
       ImageIO.write(bi, "gif", to);
     } catch (Exception e) {
       System.out.println(e);
@@ -900,3 +921,4 @@ public class HomeworldsController implements Initializable {
   String T5 = "C://T5";
   Image image;
 }
+// convert javafx.scene.image.Image for use in BufferedImage
